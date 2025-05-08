@@ -1,4 +1,4 @@
-package com.example.jetpackcompose.model.component
+package com.example.jetpackcompose.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,8 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,20 +25,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcompose.ui.theme.Fg_dark
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.example.jetpackcompose.R
+import com.example.jetpackcompose.model.Event
 import com.example.jetpackcompose.ui.theme.Primary
-import coil.compose.rememberImagePainter
+import com.example.jetpackcompose.ui.theme.Secondary
 
 
 @Composable
-fun EventCard(content_id: Int, isTour: Boolean, backgroundImageUrl: String, title: String, artistName: String, artistImageUrl: String, description: String, date: String?){
+fun EventCard(event: Event){
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val screenHeight = configuration.screenHeightDp.dp
     
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -56,16 +51,32 @@ fun EventCard(content_id: Int, isTour: Boolean, backgroundImageUrl: String, titl
         ){
             Box{
                 Image(
-                    painter = rememberAsyncImagePainter(backgroundImageUrl),
+                    painter = rememberAsyncImagePainter(event.backgroundImageUrl),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
 
+                if (event.date != null) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(10.dp)
+                            .background(Fg_dark)
+                    ) {
+                        Text(
+                            text = event.date,
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+                    }
+                }
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(10.dp),
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.Bottom
 
@@ -73,39 +84,43 @@ fun EventCard(content_id: Int, isTour: Boolean, backgroundImageUrl: String, titl
                     Box (
                         modifier = Modifier
                             .background(Primary)
-                            .padding(5.dp)
                     ){
                         Text(
-                            text = title,
-                            color = Color.White,
+                            text = event.title,
+                            color = Secondary,
                             fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold
-                            //style = MaterialTheme.typography.titleLarge
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
+
                     Row (
                         modifier = Modifier
-                            .background(Fg_dark)
-                            .padding(5.dp),
+                            .background(Fg_dark),
+
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         Box(
                             modifier = Modifier
+                                .padding(start = 8.dp)
                                 .size(16.dp)
                                 .clip(CircleShape)
                         ) {
                             Image(
-                                painter = rememberAsyncImagePainter(artistImageUrl),
+                                painter = rememberAsyncImagePainter(event.artistImageUrl),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier
+                                    .fillMaxSize()
+
                             )
                         }
                         Text(
-                            text = artistName,
+                            text = event.artistName,
                             fontSize = 12.sp,
-                            color = Color.White
+                            color = Secondary,
+                            modifier = Modifier.padding(horizontal = 8.dp)
                         )
 
                     }
@@ -113,18 +128,19 @@ fun EventCard(content_id: Int, isTour: Boolean, backgroundImageUrl: String, titl
                     Box (
                         modifier = Modifier
                             .background(Fg_dark)
-                            .padding(5.dp)
                     ){
                         Text(
-                            text = description,
+                            text = event.description,
                             color = Color.White,
                             fontSize = 12.sp,
-                            //style = MaterialTheme.typography.titleLarge
+                            modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
 
                 }
+
             }
         }
     }
 }
+

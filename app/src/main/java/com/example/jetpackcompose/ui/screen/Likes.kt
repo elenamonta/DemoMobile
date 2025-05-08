@@ -1,4 +1,4 @@
-package com.example.jetpackcompose.ui.view
+package com.example.jetpackcompose.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,13 +13,13 @@ import androidx.navigation.NavHostController
 import com.example.jetpackcompose.ui.theme.Secondary
 
 @Composable
-fun Notification(navController: NavHostController) {
+fun Likes(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()){
         Column (
             modifier = Modifier.fillMaxSize().align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Notification", fontSize = 22.sp, color = Secondary)
+            Text(text = "Likes", fontSize = 22.sp, color = Secondary)
         }
     }
 }

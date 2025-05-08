@@ -1,4 +1,4 @@
-package com.example.jetpackcompose.model.component
+package com.example.jetpackcompose.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector

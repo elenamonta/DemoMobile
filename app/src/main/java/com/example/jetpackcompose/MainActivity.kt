@@ -37,8 +37,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcompose.model.NavGraph
-import com.example.jetpackcompose.model.component.NavItem
-import com.example.jetpackcompose.model.component.getBottomNavItems
+import com.example.jetpackcompose.component.NavItem
+import com.example.jetpackcompose.component.getBottomNavItems
 import com.example.jetpackcompose.ui.theme.JetpackComposeTheme
 
 import com.example.jetpackcompose.ui.theme.*

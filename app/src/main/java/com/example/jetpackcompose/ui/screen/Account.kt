@@ -1,4 +1,4 @@
-package com.example.jetpackcompose.ui.view
+package com.example.jetpackcompose.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
