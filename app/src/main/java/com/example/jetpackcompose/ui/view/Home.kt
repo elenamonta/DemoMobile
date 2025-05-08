@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.jetpackcompose.R
+import com.example.jetpackcompose.model.component.EventCard
 import com.example.jetpackcompose.ui.theme.Secondary
 
 @Composable
@@ -20,7 +22,16 @@ fun Home(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Home", fontSize = 22.sp, color = Secondary)
+            EventCard(
+                content_id = 0,
+                isTour = false,
+                backgroundImageUrl = "file:///storage/emulated/0/hitwaves_prova/background.jpg",
+                title = "Live@Atlantico",
+                artistName = "Nayt",
+                artistImageUrl = "file:///storage/emulated/0/hitwaves_prova/background.jpg",
+                description = "Atlantico - Roma",
+                date = null
+            )
         }
     }
 }
