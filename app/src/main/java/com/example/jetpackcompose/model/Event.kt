@@ -5,8 +5,9 @@ data class Event(
     val isTour: Boolean,
     val backgroundImageUrl: String,
     val title: String,
-    val artistName: String,
-    val artistImageUrl: String,
+    //val artistName: String,
+    //val artistImageUrl: String,
+    val artist: Artist,
     val description: String,
     val date: String?
 )

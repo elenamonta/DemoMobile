@@ -108,7 +108,7 @@ fun EventCard(event: Event){
                                 .clip(CircleShape)
                         ) {
                             Image(
-                                painter = rememberAsyncImagePainter(event.artistImageUrl),
+                                painter = rememberAsyncImagePainter(event.artist.artistImageUrl),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
@@ -117,7 +117,7 @@ fun EventCard(event: Event){
                             )
                         }
                         Text(
-                            text = event.artistName,
+                            text = event.artist.artistName,
                             fontSize = 12.sp,
                             color = Secondary,
                             modifier = Modifier.padding(horizontal = 8.dp)
