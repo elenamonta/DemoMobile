@@ -22,8 +22,7 @@ import com.example.jetpackcompose.ui.theme.Secondary
 fun Title(title: String){
     Column (
         modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 10.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -35,7 +34,7 @@ fun Title(title: String){
         )
         HorizontalDivider(
             modifier = Modifier
-                .padding(vertical = 8.dp)
+                .padding(top = 8.dp)
                 .width(160.dp),
             thickness = 1.dp,
             color = Secondary

@@ -39,7 +39,8 @@ fun EventCard(event: Event){
     val screenWidth = configuration.screenWidthDp.dp
     
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
         Card(
