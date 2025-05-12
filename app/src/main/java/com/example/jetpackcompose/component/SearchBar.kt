@@ -54,6 +54,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetpackcompose.R
 import com.example.jetpackcompose.model.Artist
@@ -61,6 +62,7 @@ import com.example.jetpackcompose.model.Event
 import com.example.jetpackcompose.ui.theme.Bg_dark
 import com.example.jetpackcompose.ui.theme.Fg_dark
 import com.example.jetpackcompose.ui.theme.Secondary
+import com.example.jetpackcompose.ui.theme.rememberScreenDimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,14 +71,13 @@ fun SimpleSearchBar(
     onQueryChange: (String) -> Unit,
     searchResultsArtists: List<Artist>,
     searchResultsEvents: List<Event>,
-    onArtistClick: (Artist) -> Unit,
-    onEventClick: (Event) -> Unit,
     colors: SearchBarColors = SearchBarDefaults.colors(
         containerColor = Fg_dark,
         dividerColor = Color.Transparent,
         inputFieldColors = TextFieldDefaults.colors(Secondary.copy(alpha = 0.5f))
     ),
-    shape: Shape = RoundedCornerShape(30.dp)
+    shape: Shape = RoundedCornerShape(30.dp),
+    navController: NavHostController
 ){
 
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -88,8 +89,7 @@ fun SimpleSearchBar(
     val filteredEvents = remember(query, searchResultsEvents) {
         searchResultsEvents.filter { it.title.contains(query, ignoreCase = true) }
     }
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
+
 
     Column (
         modifier = Modifier.fillMaxWidth(),
@@ -119,7 +119,7 @@ fun SimpleSearchBar(
             colors = colors,
             shape = shape,
             modifier = Modifier
-                .width(screenWidth * 0.9f)
+                .width(rememberScreenDimensions().screenWidth * 0.9f)
         ) {
             if(expanded){
                 LazyRow(
@@ -130,41 +130,15 @@ fun SimpleSearchBar(
                 ){
                     if(filteredArtists.isNotEmpty()){
                         items(filteredArtists){ artist ->
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ){
-                                Box(
-                                    modifier = Modifier
-                                        .padding(4.dp)
-                                        .size(50.dp)
-                                        .clip(CircleShape)
-                                ) {
-                                    Image(
-                                        painter = rememberAsyncImagePainter(artist.artistImageUrl),
-                                        contentDescription = null,
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .fillMaxSize()
-
-                                    )
-                                }
-                                Text(
-                                    text = artist.artistName,
-                                    fontSize = 16.sp,
-                                    color = Secondary,
-                                    modifier = Modifier.padding(horizontal = 8.dp)
-                                )
-
-                            }
-
+                                MinimalArtist(artist)
                         }
                     }
+
                 }
 
                 HorizontalDivider(
                     modifier = Modifier
-                        .width(screenWidth * 0.85f)
+                        .width(rememberScreenDimensions().screenWidth * 0.85f)
                         .align(Alignment.CenterHorizontally)
                         .padding(16.dp),
                     thickness = 1.dp,
@@ -180,12 +154,44 @@ fun SimpleSearchBar(
                 ) {
                     if (filteredEvents.isNotEmpty()) {
                         items(filteredEvents) { event ->
-                            EventCard(event = event)
+                            EventCard(event = event, navController)
                         }
                     }
                 }
             }
 
         }
+    }
+}
+
+
+@Composable
+fun MinimalArtist(artist: Artist){
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .size(50.dp)
+                .clip(CircleShape)
+        ) {
+            Image(
+                painter = rememberAsyncImagePainter(artist.artistImageUrl),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+
+            )
+        }
+        Text(
+            text = artist.artistName,
+            fontSize = 16.sp,
+            color = Secondary,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+
     }
 }

@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.jetpackcompose.component.ArtistDetails
 import com.example.jetpackcompose.ui.theme.Secondary
 
 
@@ -19,11 +18,8 @@ fun Tickets(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()){
         Column (
             modifier = Modifier.fillMaxSize().align(Alignment.Center),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            //Text(text = "Tickets", fontSize = 22.sp, color = Secondary)
-
-            ArtistDetails(getSampleArtist().get(0))
+            verticalArrangement = Arrangement.Center) {
+            Text(text = "Tickets", fontSize = 22.sp, color = Secondary)
         }
     }
 }

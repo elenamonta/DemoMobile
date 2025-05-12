@@ -3,6 +3,7 @@ package com.example.jetpackcompose.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,17 +28,16 @@ import com.example.jetpackcompose.ui.theme.Fg_dark
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetpackcompose.model.Event
 import com.example.jetpackcompose.ui.theme.Primary
 import com.example.jetpackcompose.ui.theme.Secondary
+import com.example.jetpackcompose.ui.theme.rememberScreenDimensions
 
 
 @Composable
-fun EventCard(event: Event){
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
-    
+fun EventCard(event: Event, navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -45,8 +45,19 @@ fun EventCard(event: Event){
     ){
         Card(
             modifier = Modifier
-                .width(screenWidth * 0.9f)
-                .height(200.dp),
+                .width(rememberScreenDimensions().screenWidth * 0.9f)
+                .height(200.dp)
+                .clickable {
+                    navController.currentBackStackEntry?.savedStateHandle?.set("event", event)
+                    navController.navigate("eventDetails"){
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+
+                },
             shape = RoundedCornerShape(15.dp),
             border = BorderStroke(3.dp, Fg_dark),
         ){

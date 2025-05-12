@@ -21,6 +21,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.jetpackcompose.R
 import com.example.jetpackcompose.component.EventCard
@@ -40,16 +41,6 @@ fun Home(navController: NavHostController) {
     var query by rememberSaveable { mutableStateOf("") }
     val onQueryChange: (String) -> Unit = { query = it }
 
-    // Funzioni per la gestione del click
-    val onArtistClick: (Artist) -> Unit = { artist ->
-        println("Artista selezionato: ${artist.artistName}")
-    }
-
-    val onEventClick: (Event) -> Unit = { event ->
-        println("Evento selezionato: ${event.title}")
-    }
-
-
     Column (
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
@@ -60,8 +51,7 @@ fun Home(navController: NavHostController) {
             onQueryChange = onQueryChange,
             searchResultsArtists = getSampleArtist(),
             searchResultsEvents = getSampleEvents(),
-            onArtistClick = onArtistClick,
-            onEventClick = onEventClick
+            navController = navController
         )
 
         LazyColumn(
@@ -76,7 +66,7 @@ fun Home(navController: NavHostController) {
 
             item {
                 Button(
-                    onClick = { onClick() },
+                    onClick = { onClick(navController) },
                     colors = ButtonColors(
                         containerColor = Primary,
                         contentColor = Primary,
@@ -112,19 +102,23 @@ fun Home(navController: NavHostController) {
             }
 
             items(eventList) { event ->
-                EventCard(event = event)
+                EventCard(event = event, navController)
             }
         }
 
 
     }
-
-
 }
 
 
-fun onClick() {
-    TODO("Not yet implemented")
+fun onClick(navController: NavHostController) {
+    navController.navigate("map"){
+        popUpTo(navController.graph.startDestinationId) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
 }
 
 

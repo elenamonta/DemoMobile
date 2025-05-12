@@ -1,5 +1,9 @@
 package com.example.jetpackcompose.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Event(
     val contentId: Int,
     val isTour: Boolean,
@@ -10,4 +14,4 @@ data class Event(
     val artist: Artist,
     val description: String,
     val date: String?
-)
+) : Parcelable

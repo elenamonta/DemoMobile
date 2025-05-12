@@ -9,22 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.example.jetpackcompose.ui.theme.Secondary
 
 @Composable
-fun Likes(navController: NavHostController) {
+fun ConcertMap(navController: NavController){
     Box(modifier = Modifier.fillMaxSize()){
-        /*
         Column (
             modifier = Modifier.fillMaxSize().align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Likes", fontSize = 22.sp, color = Secondary)
+            Text(text = "Map", fontSize = 22.sp, color = Secondary)
         }
-        */
-
-        //ArtistDetails(getSampleArtist().get(0), navController)
-        EventDetails(getSampleEvents().get(0), navController)
     }
 }
