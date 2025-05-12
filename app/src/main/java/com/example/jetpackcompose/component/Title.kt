@@ -22,7 +22,8 @@ import com.example.jetpackcompose.ui.theme.Secondary
 fun Title(title: String){
     Column (
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(top=8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){

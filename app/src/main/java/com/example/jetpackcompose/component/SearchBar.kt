@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -71,7 +72,7 @@ fun SimpleSearchBar(
     onArtistClick: (Artist) -> Unit,
     onEventClick: (Event) -> Unit,
     colors: SearchBarColors = SearchBarDefaults.colors(
-        containerColor = Bg_dark,
+        containerColor = Fg_dark,
         dividerColor = Color.Transparent,
         inputFieldColors = TextFieldDefaults.colors(Secondary.copy(alpha = 0.5f))
     ),
@@ -92,7 +93,6 @@ fun SimpleSearchBar(
 
     Column (
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SearchBar(
@@ -119,9 +119,7 @@ fun SimpleSearchBar(
             colors = colors,
             shape = shape,
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
                 .width(screenWidth * 0.9f)
-                .semantics {traversalIndex = 0f}
         ) {
             if(expanded){
                 LazyRow(

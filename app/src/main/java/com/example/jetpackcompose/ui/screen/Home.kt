@@ -51,7 +51,7 @@ fun Home(navController: NavHostController) {
 
 
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
