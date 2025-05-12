@@ -84,13 +84,13 @@ fun ArtistCard(artist: Artist){
                 )
 
                 Row (
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ){
                     Text(
                         text = "${artist.averageRating}",
                         color = Secondary,
-                        fontSize = 16.sp,
-                        //modifier = Modifier.padding(horizontal = 4.dp)
+                        fontSize = 16.sp
                     )
 
                     Icon(
@@ -123,8 +123,4 @@ fun ArtistCard(artist: Artist){
             color = Secondary
         )
     }
-
-
-
-
 }

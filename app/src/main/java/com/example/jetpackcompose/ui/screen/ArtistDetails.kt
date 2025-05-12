@@ -5,11 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -38,6 +40,38 @@ import com.example.jetpackcompose.ui.theme.Secondary
 fun ArtistDetails(artist: Artist, navController: NavController){
     val eventList = getSampleEvents()
 
+    BackToHome(navController)
+
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Box(
+            modifier = Modifier
+                .padding(top = 30.dp)
+        ){
+            ArtistCard(getSampleArtist().get(0))
+        }
+
+        LazyColumn (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item{
+                Title("Next Event")
+            }
+
+            items(eventList) { event ->
+                EventCard(event = event, navController)
+            }
+        }
+    }
+}
+
+@Composable
+fun BackToHome(navController: NavController){
     Box(
         modifier = Modifier
             .size(35.dp)
@@ -51,33 +85,5 @@ fun ArtistDetails(artist: Artist, navController: NavController){
             contentDescription = null,
             tint = Bg_dark
         )
-    }
-
-
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-
-        Box(
-            modifier = Modifier
-                .padding(top = 30.dp)
-        ){
-            ArtistCard(getSampleArtist().get(0))
-        }
-
-        LazyColumn (
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            item{
-                Title("Next Event")
-            }
-
-            items(eventList) { event ->
-                EventCard(event = event, navController)
-            }
-        }
     }
 }

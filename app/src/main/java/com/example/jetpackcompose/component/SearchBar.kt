@@ -122,19 +122,7 @@ fun SimpleSearchBar(
                 .width(rememberScreenDimensions().screenWidth * 0.9f)
         ) {
             if(expanded){
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ){
-                    if(filteredArtists.isNotEmpty()){
-                        items(filteredArtists){ artist ->
-                                MinimalArtist(artist)
-                        }
-                    }
-
-                }
+                ShowArtistList(filteredArtists)
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -146,18 +134,7 @@ fun SimpleSearchBar(
 
                 )
 
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    if (filteredEvents.isNotEmpty()) {
-                        items(filteredEvents) { event ->
-                            EventCard(event = event, navController)
-                        }
-                    }
-                }
+                ShowEventList(filteredEvents, navController)
             }
 
         }
@@ -193,5 +170,37 @@ fun MinimalArtist(artist: Artist){
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
+    }
+}
+
+@Composable
+fun ShowArtistList(artistList: List<Artist>) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ){
+        if(artistList.isNotEmpty()){
+            items(artistList){ artist ->
+                MinimalArtist(artist)
+            }
+        }
+    }
+}
+
+@Composable
+fun ShowEventList(eventList: List<Event>, navController: NavHostController){
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (eventList.isNotEmpty()) {
+            items(eventList) { event ->
+                EventCard(event = event, navController)
+            }
+        }
     }
 }

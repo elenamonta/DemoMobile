@@ -85,74 +85,78 @@ fun EventCard(event: Event, navController: NavController){
                     }
                 }
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(10.dp),
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Bottom
-
-                ) {
-                    Box (
-                        modifier = Modifier
-                            .background(Primary)
-                    ){
-                        Text(
-                            text = event.title,
-                            color = Secondary,
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
-
-                    Row (
-                        modifier = Modifier
-                            .background(Fg_dark),
-
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Box(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(16.dp)
-                                .clip(CircleShape)
-                        ) {
-                            Image(
-                                painter = rememberAsyncImagePainter(event.artist.artistImageUrl),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxSize()
-
-                            )
-                        }
-                        Text(
-                            text = event.artist.artistName,
-                            fontSize = 12.sp,
-                            color = Secondary,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-
-                    }
-
-                    Box (
-                        modifier = Modifier
-                            .background(Fg_dark)
-                    ){
-                        Text(
-                            text = event.description,
-                            color = Color.White,
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
-
-                }
+                ShowDescription(event)
 
             }
         }
     }
 }
 
+@Composable
+fun ShowDescription(event: Event){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Bottom
+
+    ) {
+        Box (
+            modifier = Modifier
+                .background(Primary)
+        ){
+            Text(
+                text = event.title,
+                color = Secondary,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        }
+
+        Row (
+            modifier = Modifier
+                .background(Fg_dark),
+
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Box(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(16.dp)
+                    .clip(CircleShape)
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(event.artist.artistImageUrl),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+
+                )
+            }
+            Text(
+                text = event.artist.artistName,
+                fontSize = 12.sp,
+                color = Secondary,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+
+        }
+
+        Box (
+            modifier = Modifier
+                .background(Fg_dark)
+        ){
+            Text(
+                text = event.description,
+                color = Color.White,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        }
+
+    }
+}

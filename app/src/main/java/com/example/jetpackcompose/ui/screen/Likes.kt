@@ -24,7 +24,7 @@ fun Likes(navController: NavHostController) {
         }
         */
 
-        //ArtistDetails(getSampleArtist().get(0), navController)
-        EventDetails(getSampleEvents().get(0), navController)
+        ArtistDetails(getSampleArtist().get(0), navController)
+        //EventDetails(getSampleEvents().get(0), navController)
     }
 }

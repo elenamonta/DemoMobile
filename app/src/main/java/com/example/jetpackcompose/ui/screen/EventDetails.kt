@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -30,7 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetpackcompose.R
+import com.example.jetpackcompose.component.EventCard
 import com.example.jetpackcompose.component.MinimalArtist
+import com.example.jetpackcompose.component.ShowArtistList
 import com.example.jetpackcompose.component.Title
 import com.example.jetpackcompose.model.Event
 import com.example.jetpackcompose.ui.theme.Bg_dark
@@ -42,85 +47,120 @@ import com.example.jetpackcompose.ui.theme.rememberScreenDimensions
 @Composable
 fun EventDetails(event: Event, navController: NavController){
     val artistList = getSampleArtist()
+    val eventList = getSampleEvents()
 
-    Column {
-        Box{
-            Box(
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+
+        Box(
+            modifier = Modifier
+                .size(rememberScreenDimensions().screenWidth, 150.dp)
+        ){
+            Image(
+                painter = rememberAsyncImagePainter(event.backgroundImageUrl),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            Column(
                 modifier = Modifier
-                    .size(rememberScreenDimensions().screenWidth, 150.dp)
-            ){
-                Image(
-                    painter = rememberAsyncImagePainter(event.backgroundImageUrl),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
+                    .fillMaxSize()
+                    .padding(10.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Bottom
 
-                Column(
+            ) {
+                Box (
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(10.dp),
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Bottom
+                        .background(Primary)
+                ){
+                    Text(
+                        text = event.title,
+                        color = Secondary,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                }
 
-                ) {
-                    Box (
-                        modifier = Modifier
-                            .background(Primary)
-                    ){
-                        Text(
-                            text = event.title,
-                            color = Secondary,
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
+                Box (
+                    modifier = Modifier
+                        .background(Fg_dark)
+                ){
+                    Text(
+                        text = event.description,
+                        color = Color.White,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                }
+            }
+            BackToHome(navController)
+        }
+
+        LazyColumn (
+            modifier = Modifier
+                .width(rememberScreenDimensions().screenWidth*0.9f)
+                .padding(top = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            item {
+                Title("Artists")
+            }
+
+            item {
+                ShowArtistList(artistList)
+            }
+
+
+            if(event.isTour){
+                item {
+                    Title("Shows")
+                }
+
+                if(eventList.isNotEmpty()){
+                    items(eventList) { event ->
+                        EventCard(event, navController)
                     }
+                }
+            }else{
+                item {
+                    Title("Details")
+                }
 
-                    Box (
-                        modifier = Modifier
-                            .background(Fg_dark)
-                    ){
-                        Text(
-                            text = event.description,
-                            color = Color.White,
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
+                item {
+                    Column {
+                        InformationRow("Place", event.description)
+
+                        // ecc ecc
                     }
                 }
             }
-
-            Box(
-                modifier = Modifier
-                    .size(35.dp)
-                    .clip(CircleShape)
-                    .background(Primary)
-                    .clickable { navController.navigateUp() },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.back),
-                    contentDescription = null,
-                    tint = Bg_dark
-                )
-            }
-        }
-
-        Title("Artists")
-
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            items(artistList){ artist ->
-                MinimalArtist(artist)
-            }
         }
     }
+}
 
+@Composable
+fun InformationRow(title: String, description: String){
+    Row (
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            color = Secondary,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
+        )
 
+        Spacer(modifier = Modifier.weight(1f))
 
+        Text(
+            text = description,
+            color = Secondary,
+            fontSize = 18.sp
+        )
+    }
 }

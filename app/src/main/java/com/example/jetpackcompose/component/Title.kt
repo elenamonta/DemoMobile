@@ -30,8 +30,8 @@ fun Title(title: String){
 
     Column (
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top=8.dp),
+            .fillMaxSize(),
+            //.padding(top=8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -40,14 +40,15 @@ fun Title(title: String){
             color = Secondary,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.onGloballyPositioned { coordinates ->
-                textWidth = coordinates.size.width
-            }
+//            modifier = Modifier.onGloballyPositioned { coordinates ->
+//                textWidth = coordinates.size.width
+//            }
         )
         HorizontalDivider(
             modifier = Modifier
                 .padding(top = 8.dp)
-                .width(with(LocalDensity.current) { (textWidth + 4).toDp() }),
+                .width(180.dp),
+                //.width(with(LocalDensity.current) { (textWidth + 40).toDp() }),
             thickness = 1.dp,
             color = Secondary
         )

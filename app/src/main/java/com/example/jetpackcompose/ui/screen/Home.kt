@@ -56,7 +56,8 @@ fun Home(navController: NavHostController) {
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(top = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -65,48 +66,13 @@ fun Home(navController: NavHostController) {
             }
 
             item {
-                Button(
-                    onClick = { onClick(navController) },
-                    colors = ButtonColors(
-                        containerColor = Primary,
-                        contentColor = Primary,
-                        disabledContentColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent
-                    ),
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                ) {
-                    Row (
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.map),
-                            contentDescription = null,
-                            tint = Fg_dark,
-                        )
-                        Text(
-                            text = "Open Map",
-                            fontSize = 16.sp,
-                            color = Fg_dark,
-                            modifier = Modifier.padding(horizontal = 8.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.arrow),
-                            contentDescription = null,
-                            tint = Fg_dark
-                        )
-                    }
-                }
+                ButtonWithIcons(ImageVector.vectorResource(R.drawable.map), "Open map", ImageVector.vectorResource(R.drawable.arrow), navController)
             }
 
             items(eventList) { event ->
                 EventCard(event = event, navController)
             }
         }
-
-
     }
 }
 
@@ -121,12 +87,11 @@ fun onClick(navController: NavHostController) {
     }
 }
 
-
 fun getSampleEvents(): List<Event> {
     return listOf(
         Event(
             contentId = 0,
-            isTour = false,
+            isTour = true,
             backgroundImageUrl = "https://cdn.albumoftheyear.org/artists/sq/nayt_1727482355.jpg",
             title = "Live@Roma",
             artist = Artist(
@@ -223,4 +188,46 @@ fun getSampleArtist(): List<Artist>{
             averageRating = 4.8f
         )
     )
+}
+
+@Composable
+fun ButtonWithIcons(startIcon: ImageVector?, textBtn: String, endIcon: ImageVector?, navController: NavHostController){
+    Button(
+        onClick = { onClick(navController) },
+        colors = ButtonColors(
+            containerColor = Primary,
+            contentColor = Primary,
+            disabledContentColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent
+        ),
+        modifier = Modifier
+            .padding(vertical = 8.dp)
+    ) {
+        Row (
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            if (startIcon != null) {
+                Icon(
+                    imageVector = startIcon,
+                    contentDescription = null,
+                    tint = Fg_dark,
+                )
+            }
+            Text(
+                text = textBtn,
+                fontSize = 16.sp,
+                color = Fg_dark,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                fontWeight = FontWeight.Bold
+            )
+            if (endIcon != null) {
+                Icon(
+                    imageVector = endIcon,
+                    contentDescription = null,
+                    tint = Fg_dark
+                )
+            }
+        }
+    }
 }
