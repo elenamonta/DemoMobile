@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.jetpackcompose.component.EventCard
 import com.example.jetpackcompose.ui.screen.Account
+import com.example.jetpackcompose.ui.screen.ArtistDetails
 import com.example.jetpackcompose.ui.screen.ConcertMap
 import com.example.jetpackcompose.ui.screen.EventDetails
 import com.example.jetpackcompose.ui.screen.Home
@@ -47,6 +48,18 @@ fun NavGraph(navController: NavHostController) {
                 EventDetails(event = event, navController = navController)
             } else {
                 Text("Evento non disponibile")
+            }
+        }
+
+        composable("artistDetails") { backStackEntry ->
+            val artist = backStackEntry
+                .savedStateHandle
+                .get<Artist>("artist")
+
+            if (artist != null) {
+                ArtistDetails(artist = artist, navController = navController)
+            } else {
+                Text("Artista non disponibile")
             }
         }
     }

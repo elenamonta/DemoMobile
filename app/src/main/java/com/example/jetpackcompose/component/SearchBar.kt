@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.material3.Divider
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,6 +55,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetpackcompose.R
@@ -61,6 +63,7 @@ import com.example.jetpackcompose.model.Artist
 import com.example.jetpackcompose.model.Event
 import com.example.jetpackcompose.ui.theme.Bg_dark
 import com.example.jetpackcompose.ui.theme.Fg_dark
+import com.example.jetpackcompose.ui.theme.Primary
 import com.example.jetpackcompose.ui.theme.Secondary
 import com.example.jetpackcompose.ui.theme.rememberScreenDimensions
 
@@ -77,7 +80,7 @@ fun SimpleSearchBar(
         inputFieldColors = TextFieldDefaults.colors(Secondary.copy(alpha = 0.5f))
     ),
     shape: Shape = RoundedCornerShape(30.dp),
-    navController: NavHostController
+    navController: NavController
 ){
 
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -122,7 +125,7 @@ fun SimpleSearchBar(
                 .width(rememberScreenDimensions().screenWidth * 0.9f)
         ) {
             if(expanded){
-                ShowArtistList(filteredArtists)
+                ShowArtistList(filteredArtists, navController)
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -143,8 +146,15 @@ fun SimpleSearchBar(
 
 
 @Composable
-fun MinimalArtist(artist: Artist){
+fun MinimalArtist(
+    artist: Artist,
+    isSelected: Boolean,
+    onClick: () -> Unit
+){
     Column(
+        modifier = Modifier
+            .clickable { onClick() }
+            .background(if (isSelected) Primary.copy(alpha = 0.2f) else Color.Transparent),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
@@ -169,12 +179,13 @@ fun MinimalArtist(artist: Artist){
             color = Secondary,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
-
     }
 }
 
 @Composable
-fun ShowArtistList(artistList: List<Artist>) {
+fun ShowArtistList(artistList: List<Artist>, navController: NavController) {
+    var selectedArtistId by remember { mutableStateOf<Int?>(null) }
+
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -183,14 +194,26 @@ fun ShowArtistList(artistList: List<Artist>) {
     ){
         if(artistList.isNotEmpty()){
             items(artistList){ artist ->
-                MinimalArtist(artist)
+                MinimalArtist(
+                    artist = artist,
+                    isSelected = artist.artistId == selectedArtistId,
+                    onClick = {
+                        selectedArtistId = artist.artistId
+
+                        navController.currentBackStackEntry
+                            ?.savedStateHandle
+                            ?.set("artist", artist)
+
+                        navController.navigate("artistDetails")
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun ShowEventList(eventList: List<Event>, navController: NavHostController){
+fun ShowEventList(eventList: List<Event>, navController: NavController){
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),

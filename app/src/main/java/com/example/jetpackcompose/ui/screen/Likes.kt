@@ -15,16 +15,16 @@ import com.example.jetpackcompose.ui.theme.Secondary
 @Composable
 fun Likes(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()){
-        /*
+
         Column (
             modifier = Modifier.fillMaxSize().align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Likes", fontSize = 22.sp, color = Secondary)
         }
-        */
 
-        ArtistDetails(getSampleArtist().get(0), navController)
+
+        //ArtistDetails(getSampleArtist().get(0), navController)
         //EventDetails(getSampleEvents().get(0), navController)
     }
 }

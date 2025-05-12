@@ -49,7 +49,7 @@ fun ArtistDetails(artist: Artist, navController: NavController){
             modifier = Modifier
                 .padding(top = 30.dp)
         ){
-            ArtistCard(getSampleArtist().get(0))
+            ArtistCard(artist)
         }
 
         LazyColumn (

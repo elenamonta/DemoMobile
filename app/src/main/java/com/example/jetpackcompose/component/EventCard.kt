@@ -86,7 +86,6 @@ fun EventCard(event: Event, navController: NavController){
                 }
 
                 ShowDescription(event)
-
             }
         }
     }

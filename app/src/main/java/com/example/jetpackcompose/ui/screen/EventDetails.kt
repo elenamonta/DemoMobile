@@ -52,7 +52,6 @@ fun EventDetails(event: Event, navController: NavController){
     Column (
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-
         Box(
             modifier = Modifier
                 .size(rememberScreenDimensions().screenWidth, 150.dp)
@@ -112,7 +111,7 @@ fun EventDetails(event: Event, navController: NavController){
             }
 
             item {
-                ShowArtistList(artistList)
+                ShowArtistList(artistList, navController)
             }
 
 
